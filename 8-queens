@@ -1,0 +1,41 @@
+def is_safe(board, row, col):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i] == col or \
+           board[i] - i == col - row or \
+           board[i] + i == col + row:
+            return False
+    return True
+
+def print_solution(board):
+    for row in board:
+        line = ['Q' if col == row else '.' for col in range(len(board))]
+        print(' '.join(line))
+    print("\n")
+
+def solve_queens(board, row):
+    if row == len(board):
+        print_solution(board)
+        return
+
+    for col in range(len(board)):
+        if is_safe(board, row, col):
+            board[row] = col
+            solve_queens(board, row + 1)
+            board[row] = -1  # backtrack
+
+def main():
+    try:
+        num_queens = int(input("Enter the number of queens: "))
+        if num_queens <= 0:
+            raise ValueError("Number of queens must be a positive integer.")
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
+
+    board = [-1] * num_queens
+    print(f"{num_queens}-Queens Problem Solver")
+    solve_queens(board, 0)
+
+if __name__ == "__main__":
+    main()
