@@ -1,0 +1,41 @@
+def water_jug_problem(capacity_jug1, capacity_jug2, target):
+    jug1 = 0
+    jug2 = 0
+
+    print(f"Initial state: Jug1={jug1}, Jug2={jug2}")
+
+    while jug1 != target and jug2 != target:
+        action = input("\nEnter action (fill1, fill2, pour12, pour21, empty1, empty2, done): ").lower()
+
+        if action == 'fill1':
+            jug1 = capacity_jug1
+        elif action == 'fill2':
+            jug2 = capacity_jug2
+        elif action == 'pour12':
+            pour_amount = min(jug1, capacity_jug2 - jug2)
+            jug1 -= pour_amount
+            jug2 += pour_amount
+        elif action == 'pour21':
+            pour_amount = min(jug2, capacity_jug1 - jug1)
+            jug2 -= pour_amount
+            jug1 += pour_amount
+        elif action == 'empty1':
+            jug1 = 0
+        elif action == 'empty2':
+            jug2 = 0
+        elif action == 'done':
+            break
+        else:
+            print("Invalid action. Please enter a valid action.")
+
+        print(f"Jug1={jug1}, Jug2={jug2}")
+
+        if jug1 == target or jug2 == target:
+            print("Target reached!")
+
+if __name__ == "__main__":
+    capacity_jug1 = int(input("Enter the capacity of Jug1: "))
+    capacity_jug2 = int(input("Enter the capacity of Jug2: "))
+    target = int(input("Enter the target amount: "))
+
+    water_jug_problem(capacity_jug1, capacity_jug2, target)
